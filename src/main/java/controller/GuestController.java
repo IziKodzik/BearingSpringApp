@@ -26,8 +26,10 @@ public class GuestController {
 
         System.out.println(user.getName());
         System.out.println("XDDD");
+
+
 //        return "redirect:/user/login";
-        return "redirect:/";
+        return "redirect:/jdokra";
 
     }
 

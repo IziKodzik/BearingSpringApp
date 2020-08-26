@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@include file="header.jsp"%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>BearingsFinder - Log in</title>
@@ -23,7 +22,7 @@
             <ul id="login-list">
 
 
-                <li><form:input path="name" placeholder="Your name" type='text'/></li>
+                <li><form:input path="name" placeholder="Username" type='text'/></li>
                 <li><form:input path="password" placeholder="Password" type='password'/></li>
 
 

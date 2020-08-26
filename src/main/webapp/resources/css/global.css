@@ -16,12 +16,19 @@ body{
 
 }
 
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+}
+
 .form-container ul{
 
     padding: 60px 50px;
     box-shadow: 0 0 10px 0 black;
     border-radius: 20px;
-    list-style: none;
+
 }
 .notice{
 
@@ -31,12 +38,12 @@ body{
 
 }
 
-
 #login-section{
 
     padding-top: 10vh;
 
 }
+
 ul li, ul li input{
 
     background-color: transparent;
@@ -59,9 +66,6 @@ ul li input{
 
 }
 
-
-
-
 .button{
 
     box-shadow: none;
@@ -81,6 +85,18 @@ ul li input{
     border-color:green;
     color:green;
 
+}
+
+ul .horizontal-list{
+
+   overflow: hidden;
+
+}
+
+ul li{
+
+    float : left;
+    color:red;
 
 }
 

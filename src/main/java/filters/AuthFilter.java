@@ -1,6 +1,7 @@
 package filters;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -21,8 +22,7 @@ public class AuthFilter
             , ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
 
-
-        servletResponse.getWriter().write("FUCK");
+        filterChain.doFilter(servletRequest,servletResponse);
 
     }
 
