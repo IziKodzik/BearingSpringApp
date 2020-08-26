@@ -4,11 +4,7 @@
 <head>
     <title>Bearing Comparer - login page</title>
     <link rel="stylesheet" type="text/css" href="../../resources/css/global.css">
-    <header>
 
-        <div class="welcome">Welcome</div>
-
-    </header>
 
 </head>
 <body>
