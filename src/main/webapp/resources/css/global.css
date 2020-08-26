@@ -1,0 +1,72 @@
+
+*{
+    margin:0;
+    padding: 0;
+}
+
+body{
+    padding: 10vh;
+    /*background-image: url("../images/lake.png");*/
+    background-color: cadetblue;
+    text-align: center;
+}
+.form-container{
+
+    padding: 10px 20px;
+    display:inline-block;
+
+}
+
+.form-container ul{
+
+    padding: 30px 50px;
+    box-shadow: 0 0 10px 0 black;
+    border-radius: 20px;
+    list-style: none;
+}
+
+
+
+ul li, ul li input{
+
+    background-color: transparent;
+    border-color: transparent;
+
+}
+ul li{
+
+    box-shadow:  0 0 10px black;
+    border-radius: 5px;
+    padding: 10px 20px 5px 20px;
+    margin: 10px 20px 5px 20px;
+
+}
+
+#login-list input{
+
+    font-size: 20px;
+
+}
+
+#login-section .horizontal-list{
+
+    list-style: none;
+    margin: 0;
+
+}
+ul li .horizontal-list,ul li .horizontal-list li{
+
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+
+}
+
+
+.button{
+
+
+}
+
+
+

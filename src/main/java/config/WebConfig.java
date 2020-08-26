@@ -13,14 +13,10 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({"filters","controller"})
+@ComponentScan({"filters","controller","service","model"})
 public class WebConfig
     implements WebMvcConfigurer {
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index");
-    }
 
     @Bean
     public ViewResolver viewResolver() {
@@ -35,7 +31,7 @@ public class WebConfig
     }
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
-        registry.addResourceHandler("resources/**").addResourceLocations("/resources/");
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
 

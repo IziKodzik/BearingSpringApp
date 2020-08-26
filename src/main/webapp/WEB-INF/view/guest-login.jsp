@@ -1,34 +1,37 @@
-<%@ include file="header.jsp"%>
-
-
+<%--
+  Created by IntelliJ IDEA.
+  User: JebanyDis
+  Date: 26.08.2020
+  Time: 02:24
+  To change this template use File | Settings | File Templates.
+--%>
+<%@include file="header.jsp"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-    <title>Bearing Comparer - login page</title>
-    <link rel="stylesheet" type="text/css" href="../../resources/css/tests.css">
-    <header>
-
-        <div class="welcome">Welcome</div>
-
-    </header>
-
+    <title>BearingsFinder - Log in</title>
+    <link rel="stylesheet" type="text/css" href="../../resources/css/global.css">
 </head>
 <body>
 
+    <section id="login-section" class="form-container">
+        <form:form action="/processLogin" modelAttribute="user" method="post" class="form-container">
 
-<section id="login-section">
+            <ul id="login-list">
 
-    <form:form action="/processLogin" modelAttribute="user" method="post" class="form-container">
+                <li><form:input path="name" placeholder="Your name" type='text'/></li>
+                <li><form:input path="password" placeholder="Password" type='password'/></li>
 
-        <ul>
 
-            <li><form:input path="name" placeholder="Your name" type='text'/></li>
-            <li><form:input path="password" placeholder="Password" type='password'/></li>
-            <li><input class="button" name="logIn" type="submit" value="Log in"/></li>
-        </ul>
+                <li><input class="button" name="logIn" type="submit" value="Log in"/></li>
+                <li><input class="button" name="logIn" type="submit" value="Remind me password"/></li>
 
-    </form:form>
 
-</section>
+            </ul>
 
+        </form:form>
+
+    </section>
 
 </body>
 </html>
