@@ -1,7 +1,7 @@
 package config;
 
-import filters.AuthFilter;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({"filters","controller","service","model","dao"})
+@ComponentScan({"filter","controller","service","model","dao"})
 public class WebConfig
     implements WebMvcConfigurer {
 
@@ -29,6 +29,8 @@ public class WebConfig
 
         return bean;
     }
+
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");

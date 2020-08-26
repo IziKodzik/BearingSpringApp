@@ -1,17 +1,16 @@
 package dao.impl;
-import dao.ClientDao;
+import dao.UserDao;
 import model.User;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 @Repository("fakeDao")
 public class FakeDao
-    implements ClientDao {
+    implements UserDao {
 
-    final List<User> clients = new ArrayList<User>();
+    final Set<User> clients = new LinkedHashSet<User>();
 
     public FakeDao(){
         this.generateFakeClients();
@@ -24,12 +23,14 @@ public class FakeDao
 
     public void generateFakeClients(){
 
-        if (clients.size()!=0){
+        if (clients.size()==0){
             clients.add(new User(0,"Jan","Pawel",null));
             clients.add(new User(1,"Tomasz","Hajto",null));
             clients.add(new User(2,"Karol","Wojtyla",null));
 
         }
+        System.out.println(clients);
+        System.out.println("XDD");
 
     }
 }

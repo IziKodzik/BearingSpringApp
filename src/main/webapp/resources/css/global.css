@@ -87,16 +87,15 @@ ul li input{
 
 }
 
-ul .horizontal-list{
+ul.horizontal-list{
 
    overflow: hidden;
 
 }
 
-ul li{
+ul.horizontal-list li {
 
     float : left;
-    color:red;
 
 }
 

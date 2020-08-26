@@ -1,8 +1,5 @@
 package config;
-import filters.AuthFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-
-import javax.servlet.Filter;
 
 
 public class AppInitializer

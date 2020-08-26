@@ -2,8 +2,9 @@ package service;
 
 import model.User;
 
-public interface ClientService {
+public interface AdminService {
 
     User getUserById(int id);
+
 
 }

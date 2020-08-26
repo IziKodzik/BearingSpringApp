@@ -50,4 +50,29 @@ public class User {
     public void setRoles(HashSet<Role> roles) {
         this.roles = roles;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
+    }
+
+    @Override
+    public int hashCode() {
+        System.out.println("hash");
+        return new Integer(id).hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        System.out.println("equal");
+        if(!(obj instanceof User))
+            return false;
+        else
+          return this.id == ((User) obj).id;
+    }
 }
