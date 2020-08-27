@@ -34,11 +34,7 @@ public class GuestController {
     @PostMapping("/processLogin")
     public String processLogin(@ModelAttribute("user") User user, Model model){
 
-
-        String res = (securityService.authenticateUser(user));
-        if(!(res.contains("oo")))
-            return "redirect:/jdokra";
-        else
+            securityService.authenticateUser(user);
             return "redirect:/user";
 
     }

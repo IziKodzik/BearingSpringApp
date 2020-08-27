@@ -1,11 +1,17 @@
 package service;
 
+import model.Role;
+import model.Token;
 import model.User;
+
+import java.util.Set;
 
 public interface SecurityService {
 
-    String authenticateUser(User user);
+    Token authenticateUser(User user);
+    String redirect(Token token);
+    Set<Role> parseToken(Token token);
 
-    String redirect(String key);
+
 
 }

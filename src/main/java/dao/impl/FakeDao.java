@@ -1,7 +1,9 @@
 package dao.impl;
 import dao.UsersDao;
 import model.Role;
+import model.Token;
 import model.User;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
@@ -11,41 +13,81 @@ import java.util.*;
 public class FakeDao
     implements UsersDao {
 
-    final Map<String,User> clients = new LinkedHashMap();
-    final Map<String,Role> roles = new LinkedHashMap<>();
+    final Set<User> clients = new HashSet<>();
+    final Set<Role> roles = new HashSet<>();
+    final Set<Token> tokens = new HashSet<>();
 
     public FakeDao(){
         this.generateFakeClients();
     }
 
     @Override
-    public User getUserById(int id) {
+    public Optional<User> getUserById(int id) {
         return null;
     }
 
     @Override
-    public User getUserByUsername(String username) {
+    public Optional<User> getUserByUsername(String username) {
 
-        return clients.get(username);
+        return clients.stream().filter(user -> user.getUsername().equals(username)).findFirst();
+    }
+
+    @Override
+    public Optional<Token> getToken(Token token) {
+        return this.tokens.stream().filter(t->t.equals(token)).findFirst();
+    }
+
+    @Override
+    public Optional<Token> getTokenByUUID(UUID uuid) {
+        return this.tokens.stream().filter(t->t.getId().equals(uuid)).findFirst();
+    }
+
+    @Override
+    public Optional<Token> getTokenByUserName(String username) {
+        return this.tokens.stream()
+                .filter(t->t.getUser().getUsername().equals(username)).findFirst();
+    }
+
+    @Override
+    public boolean addTokenForUser(User user, Token token) {
+        int size = this.tokens.size();
+        this.tokens.add(new Token(UUID.randomUUID(), DateTime.now().plusMinutes(15),user));
+        return size==this.tokens.size();
+    }
+
+    @Override
+    public boolean refreshToken(Token token) {
+        return false;
+    }
+
+    @Override
+    public boolean addToken(Token token) {
+        return false;
+    }
+
+    @Override
+    public Set<User> getUsers() {
+        return null;
     }
 
     public void generateFakeClients(){
 
 
         if(roles.size()==0){
-            roles.put("ADMIN",new Role(0,"ADMIN"));
-            roles.put("USER",new Role(1,"USER"));
+            roles.add(new Role(0,"ADMIN"));
+            roles.add(new Role(1,"USER"));
         }
         if (clients.size()==0){
 
 
-            clients.put("Jan",new User(0,"Jan","Pawel",null));
-            clients.put("Tomasz",new User(1,"Tomasz","Hajto",null));
-            clients.put("Karol",new User(2,"Karol","Wojtyla",null));
+            clients.add(new User(0,"Jan","Pawel",null));
+            clients.add(new User(1,"Tomasz","Hajto",null));
+            clients.add(new User(2,"Karol","Wojtyla",null));
 
         }
         System.out.println(clients);
         System.out.println("XDD");
 
     }
+
 }
