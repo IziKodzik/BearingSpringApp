@@ -1,7 +1,11 @@
 package service;
 
+import model.User;
+
 public interface SecurityService {
 
-    String authenticateUser(String username,String password);
+    String authenticateUser(User user);
+
+    String redirect(String key);
 
 }

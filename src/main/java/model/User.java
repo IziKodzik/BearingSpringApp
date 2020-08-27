@@ -5,7 +5,7 @@ import java.util.HashSet;
 public class User {
 
     private int id;
-    private String name;
+    private String username;
     private String password;
     private HashSet<Role> roles;
 
@@ -20,19 +20,19 @@ public class User {
 
     public User(){}
 
-    public User(int id,String name, String password, HashSet<Role> roles) {
-        this.name = name;
+    public User(int id, String username, String password, HashSet<Role> roles) {
+        this.username = username;
         this.password = password;
         this.roles = roles;
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -55,7 +55,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", roles=" + roles +
                 '}';
@@ -64,7 +64,7 @@ public class User {
     @Override
     public int hashCode() {
         System.out.println("hash");
-        return new Integer(id).hashCode();
+        return username.hashCode();
     }
 
     @Override
@@ -73,6 +73,6 @@ public class User {
         if(!(obj instanceof User))
             return false;
         else
-          return this.id == ((User) obj).id;
+          return this.username.equals(((User) obj).username);
     }
 }

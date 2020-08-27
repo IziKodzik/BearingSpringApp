@@ -1,5 +1,6 @@
 package dao.impl;
-import dao.UserDao;
+import dao.UsersDao;
+import model.Role;
 import model.User;
 import org.springframework.stereotype.Repository;
 
@@ -8,9 +9,10 @@ import java.util.*;
 
 @Repository("fakeDao")
 public class FakeDao
-    implements UserDao {
+    implements UsersDao {
 
-    final Set<User> clients = new LinkedHashSet<User>();
+    final Map<String,User> clients = new LinkedHashMap();
+    final Map<String,Role> roles = new LinkedHashMap<>();
 
     public FakeDao(){
         this.generateFakeClients();
@@ -21,12 +23,25 @@ public class FakeDao
         return null;
     }
 
+    @Override
+    public User getUserByUsername(String username) {
+
+        return clients.get(username);
+    }
+
     public void generateFakeClients(){
 
+
+        if(roles.size()==0){
+            roles.put("ADMIN",new Role(0,"ADMIN"));
+            roles.put("USER",new Role(1,"USER"));
+        }
         if (clients.size()==0){
-            clients.add(new User(0,"Jan","Pawel",null));
-            clients.add(new User(1,"Tomasz","Hajto",null));
-            clients.add(new User(2,"Karol","Wojtyla",null));
+
+
+            clients.put("Jan",new User(0,"Jan","Pawel",null));
+            clients.put("Tomasz",new User(1,"Tomasz","Hajto",null));
+            clients.put("Karol",new User(2,"Karol","Wojtyla",null));
 
         }
         System.out.println(clients);

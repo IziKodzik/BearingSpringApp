@@ -22,11 +22,11 @@
             <ul id="login-list">
 
 
-                <li><form:input path="name" placeholder="Username" type='text'/></li>
+                <li><form:input path="username" placeholder="Username" type='text'/></li>
                 <li><form:input path="password" placeholder="Password" type='password'/></li>
 
 
-                <li><input class="button" name="logIn" type="submit" value="Log in"/></li>
+                <li><input class="button" formaction="/processLogin" name="logIn" type="submit" value="Log in"/></li>
                 <li><input class="button" formaction="/remind" name="RemindPassword" type="submit" value="Remind me password"/></li>
 
 

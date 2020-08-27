@@ -38,8 +38,6 @@ public class SecurityFilter
             throws IOException, ServletException {
 
 
-        System.out.println("auth");
-        securityService.authenticateUser("plop","plop");
         filterChain.doFilter(servletRequest,servletResponse);
 
     }
