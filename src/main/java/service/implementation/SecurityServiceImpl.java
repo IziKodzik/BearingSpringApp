@@ -9,9 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import service.SecurityService;
 
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service("SecurityService")
 public class SecurityServiceImpl
@@ -50,12 +48,18 @@ public class SecurityServiceImpl
     }
 
     @Override
-    public Set<Role> parseToken(Token token) {
+    public User parseTokenToUser(Token token) {
         Optional<Token> maybeToken = DB.getToken(token);
-        if (maybeToken.isPresent()) {
-            Token t = maybeToken.get();
-            return t.getUser().getRoles();
-        }
+        if(maybeToken.isPresent())
+            return token.getUser();
+        return null;
+    }
+
+    @Override
+    public Set<Role> parseTokenToRoles(Token token) {
+        User user = parseTokenToUser(token);
+        if(user!=null)
+            return user.getRoles();
         return null;
     }
 
@@ -64,12 +68,15 @@ public class SecurityServiceImpl
         if(token==null || token.isExpired())
             return "/";
 
-        Set<Role> roles = parseToken(token);
+        User user = parseTokenToUser(token);
+        Set<Role> roles = user.getRoles();
         if(roles==null || roles.size()==0)
             return "/";
 
-//        if(roles.stream().filter())
-        return "/";
+        Iterator<Role> roleIterator = roles.iterator();
+        if(roleIterator.next().getName().equals("ADMIN"))
+            return String.format("/admin/%d",user.getId());
+        return String.format("/user/%d",user.getId());
 
     }
 

@@ -1,6 +1,7 @@
 package model;
 
 import java.util.HashSet;
+import java.util.Set;
 
 
 public class User {
@@ -9,8 +10,14 @@ public class User {
     private int id;
     private String username;
     private String password;
-    private HashSet<Role> roles;
+    private Set<Role> roles;
 
+    public User(int id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.roles = new HashSet<>();
+    }
 
     public int getId() {
         return id;
@@ -45,7 +52,7 @@ public class User {
         this.password = password;
     }
 
-    public HashSet<Role> getRoles() {
+    public Set<Role> getRoles() {
         return roles;
     }
 
@@ -77,4 +84,5 @@ public class User {
         else
           return this.username.equals(((User) obj).username);
     }
+
 }

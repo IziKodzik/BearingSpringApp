@@ -10,8 +10,8 @@ public interface SecurityService {
 
     Token authenticateUser(User user);
     String redirect(Token token);
-    Set<Role> parseToken(Token token);
-
+    Set<Role> parseTokenToRoles(Token token);
+    User parseTokenToUser(Token token);
 
 
 }

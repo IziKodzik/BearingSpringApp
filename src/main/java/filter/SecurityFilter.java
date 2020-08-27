@@ -19,7 +19,7 @@ import java.io.IOException;
 
 @ComponentScan({"service"})
 @WebFilter(filterName = "AuthFilter",urlPatterns = {"/user/*","/admin/*"})
-@Order(1)
+//@Order(1)
 public class SecurityFilter
     implements Filter {
 
@@ -37,7 +37,7 @@ public class SecurityFilter
             , ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
 
-
+        System.out.println("FILTRU");
         filterChain.doFilter(servletRequest,servletResponse);
 
     }

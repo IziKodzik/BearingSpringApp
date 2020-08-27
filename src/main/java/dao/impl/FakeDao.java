@@ -50,9 +50,8 @@ public class FakeDao
 
     @Override
     public boolean addTokenForUser(User user, Token token) {
-        int size = this.tokens.size();
-        this.tokens.add(new Token(UUID.randomUUID(), DateTime.now().plusMinutes(15),user));
-        return size==this.tokens.size();
+      token.setUser(user);
+      return this.addToken(token);
     }
 
     @Override
@@ -62,7 +61,7 @@ public class FakeDao
 
     @Override
     public boolean addToken(Token token) {
-        return false;
+        return this.tokens.add(token);
     }
 
     @Override
@@ -80,7 +79,8 @@ public class FakeDao
         if (clients.size()==0){
 
 
-            clients.add(new User(0,"Jan","Pawel",null));
+            clients.add(new User(0,"Jan","Pawel"));
+            clients.iterator().next().getRoles().add(new Role(0,"USER"));
             clients.add(new User(1,"Tomasz","Hajto",null));
             clients.add(new User(2,"Karol","Wojtyla",null));
 

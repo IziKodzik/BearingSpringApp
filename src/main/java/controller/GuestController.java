@@ -1,10 +1,12 @@
 package controller;
 
+import model.Token;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,10 +34,15 @@ public class GuestController {
 
     }
     @PostMapping("/processLogin")
-    public String processLogin(@ModelAttribute("user") User user, Model model){
+    public ModelAndView processLogin(@ModelAttribute("user") User user, Model model){
 
-            securityService.authenticateUser(user);
-            return "redirect:/user";
+           Token token = securityService.authenticateUser(user);
+           String redirect = securityService.redirect(token);
+           if(redirect.equals("/"))
+               model.addAttribute("badLogin","Not authorized");
+
+
+           return new ModelAndView(String.format("redirect:%s", redirect));
 
     }
 
