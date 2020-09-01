@@ -20,6 +20,7 @@ public class FakeDao
     public FakeDao(){
         this.generateFakeClients();
     }
+
     public void generateFakeClients(){
 
 
@@ -32,8 +33,8 @@ public class FakeDao
 
             clients.add(new User(0,"Jan","Pawel"));
             clients.iterator().next().getRoles().add(new Role(0,"USER"));
-            clients.add(new User(1,"Tomasz","Hajto",null));
-            clients.add(new User(2,"Karol","Wojtyla",null));
+            clients.add(new User(1,"Tomasz","Hajto",new Role(1,"ADMIN")));
+            clients.add(new User(2,"Karol","Wojtyla",new Role(1, "ADMIN")));
 
         }
         System.out.println(clients);

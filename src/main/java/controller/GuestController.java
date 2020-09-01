@@ -7,15 +7,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 import service.SecurityService;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,22 +27,34 @@ public class GuestController {
     }
 
 
-//    @GetMapping("/test")
-//    public ModelAndView test(HttpServletRequest request, HttpServletResponse response,
-//                             @CookieValue(value = "test",defaultValue = "-00=")String cookie){
+//    @GetMapping("/testSend")
+//    public ModelAndView test(final RedirectAttributes redirectAttributes) {
+//        // the following attribute is a ModelAttribute
+//        redirectAttributes.addFlashAttribute("auth", true);
+//        final ModelAndView redirectView = new ModelAndView("redirect:/");
+//        return redirectView;
+//    }
+//    @GetMapping("/testRecive")
+//    public ModelAndView redirectedPage(
+//            // access FlashAttributes
+//            final Model model, @ModelAttribute("auth") final String messageA,
+//            // access 'dynamic' Attributes
+//            @RequestParam("messageB") final String messageB, @RequestParam("messageC") final String messageC) {
 //
+//        System.out.println(messageA);
 //
-//        return new ModelAndView("test");
+//        return new ModelAndView("admin-home");
 //    }
 
-    @GetMapping
-    public ModelAndView displayLogin(Model model,HttpServletRequest request) {
+    @RequestMapping(method = {RequestMethod.GET})
+    public ModelAndView displayLogin(final ModelMap model
+            ,@ModelAttribute("auth") final String auth
+        ,HttpServletRequest request) {
 
-
+        System.out.println(auth + " <---");
         ModelAndView mav = new ModelAndView("guest-login");
-
-
-            mav.addObject("badLogin", "Not yet");
+        if(auth.equals("F"))
+            mav.addObject("badLogin","No authorization");
 
         User user = new User();
         model.addAttribute("user",user);
@@ -54,30 +63,16 @@ public class GuestController {
 
     }
     @PostMapping("/processLogin")
-    public ModelAndView processLogin(@ModelAttribute("user") User user, Model model,
-                                    HttpServletResponse response){
+    public ModelAndView processLogin (final RedirectAttributes redirectAttributes
+        ,@ModelAttribute("user") User user,final Model model
+            ,HttpServletResponse response){
 
 
-           Token token = securityService.authenticateUser(user);
-           String redirect = securityService.redirect(token);
-           if(redirect.equals("/")) {
-               //wymyśl cos lepszego 
-//               ModelAndView mav = new ModelAndView("guest-login");
-//
-//
-//               mav.addObject("badLogin", "No authorization");
-//
-//               User usere = new User();
-//               model.addAttribute("user",usere);
-//
-//               return mav;
-           }else
-               securityService.giveTokenToBrowser(response,token);
-        return new ModelAndView(String.format("redirect:%s", redirect));
+        Token token = securityService.authenticateUser(user);
+           String redirect = securityService.redirectv0(token);
+
+           return new ModelAndView(String.format("redirect:%s", redirect));
 
     }
-
-
-
 
 }

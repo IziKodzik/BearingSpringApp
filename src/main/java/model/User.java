@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,7 +11,7 @@ public class User {
     private int id;
     private String username;
     private String password;
-    private Set<Role> roles;
+    private Set<Role> roles= new HashSet<>();
 
     public User(int id, String username, String password) {
         this.id = id;
@@ -34,6 +35,16 @@ public class User {
         this.password = password;
         this.roles = roles;
         this.id = id;
+    }
+
+    public User(int id,String username,String password, Role... roles){
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        Set<Role> toAdd = new HashSet<>();
+        Collections.addAll(toAdd, roles);
+        this.roles = toAdd;
+
     }
 
     public String getUsername() {

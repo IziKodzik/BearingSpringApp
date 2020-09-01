@@ -2,6 +2,7 @@
 *{
     margin:0;
     padding: 0;
+    font-family: "Courier New","SansSerif";
 }
 
 body{
@@ -98,6 +99,23 @@ ul.horizontal-list li {
     float : left;
 
 }
+
+.popper{
+
+    font-size: 30px;
+    text-shadow: 0 0 2px white;
+    animation: color-change 1.5s linear ;
+}
+@keyframes color-change{
+    0% { color: transparent; }
+    50% { color: red; }
+    100% { color: black;
+    }
+}
+
+
+
+
 
 
 

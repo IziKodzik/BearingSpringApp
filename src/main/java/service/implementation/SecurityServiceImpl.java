@@ -8,6 +8,9 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 import service.SecurityService;
 
 import javax.servlet.http.Cookie;
@@ -69,7 +72,7 @@ public class SecurityServiceImpl
     }
 
     @Override
-    public String redirect(Token token) {
+    public String redirectv0(Token token) {
         if(token==null || token.isExpired())
             return "/";
 
@@ -106,6 +109,13 @@ public class SecurityServiceImpl
     @Override
     public boolean hasId(Token token, int id) {
         return (token!=null&& token.getUser().getId() == id && !token.isExpired());
+
+    }
+
+    @Override
+    public ModelAndView noAuthRedirect(final RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("auth","F");
+        return new ModelAndView("redirect:/");
 
     }
 
