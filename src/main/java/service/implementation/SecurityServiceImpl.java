@@ -4,14 +4,13 @@ import dao.UsersDao;
 import model.Role;
 import model.Token;
 import model.User;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import service.SecurityService;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
@@ -42,9 +41,11 @@ public class SecurityServiceImpl
                     userToken = (Optional.of(new Token(UUID.randomUUID())));
                     suspect = DB.getUserByUsername(client.getUsername());
                 }while (!(suspect.isPresent()));
-
+                userToken.get().setExpireDate(DateTime.now().plusMinutes(15));
                 DB.addTokenForUser(client,userToken.get());
             }
+            System.out.println(DB.getUsers() + " <-- users updated");
+            System.out.println(DB.getTokens());
             return userToken.get();
         }
         return null;
@@ -90,27 +91,26 @@ public class SecurityServiceImpl
     }
 
     @Override
-    public boolean hasRole(Cookie cookie, String role) {
+    public boolean hasRole(Token token, String role) {
 
-        Token token = DB.getTokenByUUID((cookie.getValue())).orElse(null);
-        if(token==null)
-            return false;
-        return (token.getUser().getRoles().contains(new Role(role)));
+
+        return (token!=null && token.getUser().getRoles().contains(new Role(role)) && !token.isExpired());
 
     }
 
     @Override
-    public String getTokenUUIDFromCookie(Cookie cookie) {
-        return cookie.getValue();
+    public Token getTokenUUIDFromCookie(String cookie) {
+        return DB.getTokenByUUID(cookie).orElse(null);
     }
 
     @Override
-    public boolean hasId(ServletRequest request, int id) {
-        return false;
+    public boolean hasId(Token token, int id) {
+        return (token!=null&& token.getUser().getId() == id && !token.isExpired());
+
     }
 
     @Override
-    public boolean hasRoleAndId(ServletRequest request, String role, int id) {
-        return false;
+    public boolean hasRoleAndId(Token token, String role, int id) {
+        return hasRole(token,role) && hasId(token,id);
     }
 }

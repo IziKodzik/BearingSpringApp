@@ -30,35 +30,49 @@ public class GuestController {
     }
 
 
-    @GetMapping("/test")
-    public ModelAndView test(HttpServletRequest request, HttpServletResponse response,
-                             @CookieValue(value = "test",defaultValue = "-00=")String gcookie){
-
-        return new ModelAndView("test");
-    }
+//    @GetMapping("/test")
+//    public ModelAndView test(HttpServletRequest request, HttpServletResponse response,
+//                             @CookieValue(value = "test",defaultValue = "-00=")String cookie){
+//
+//
+//        return new ModelAndView("test");
+//    }
 
     @GetMapping
-    public ModelAndView displayLogin(Model model) {
+    public ModelAndView displayLogin(Model model,HttpServletRequest request) {
+
+
+        ModelAndView mav = new ModelAndView("guest-login");
+
+
+            mav.addObject("badLogin", "Not yet");
 
         User user = new User();
         model.addAttribute("user",user);
-        ModelAndView mav = new ModelAndView("guest-login");
 
         return mav;
 
     }
     @PostMapping("/processLogin")
     public ModelAndView processLogin(@ModelAttribute("user") User user, Model model,
-                                     HttpServletResponse response){
+                                    HttpServletResponse response){
 
 
            Token token = securityService.authenticateUser(user);
            String redirect = securityService.redirect(token);
-           if(redirect.equals("/"))
-               model.addAttribute("badLogin","Not authorized");
-            else
+           if(redirect.equals("/")) {
+               //wymyśl cos lepszego 
+//               ModelAndView mav = new ModelAndView("guest-login");
+//
+//
+//               mav.addObject("badLogin", "No authorization");
+//
+//               User usere = new User();
+//               model.addAttribute("user",usere);
+//
+//               return mav;
+           }else
                securityService.giveTokenToBrowser(response,token);
-
         return new ModelAndView(String.format("redirect:%s", redirect));
 
     }

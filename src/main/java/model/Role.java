@@ -36,6 +36,14 @@ public class Role {
     }
 
     @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if(!(obj.getClass().equals(this.getClass())))
             return false;

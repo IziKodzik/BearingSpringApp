@@ -20,7 +20,24 @@ public class FakeDao
     public FakeDao(){
         this.generateFakeClients();
     }
+    public void generateFakeClients(){
 
+
+        if(roles.size()==0){
+            roles.add(new Role(0,"ADMIN"));
+            roles.add(new Role(1,"USER"));
+        }
+        if (clients.size()==0){
+
+
+            clients.add(new User(0,"Jan","Pawel"));
+            clients.iterator().next().getRoles().add(new Role(0,"USER"));
+            clients.add(new User(1,"Tomasz","Hajto",null));
+            clients.add(new User(2,"Karol","Wojtyla",null));
+
+        }
+        System.out.println(clients);
+    }
     @Override
     public Optional<User> getUserById(int id) {
         return null;
@@ -40,6 +57,12 @@ public class FakeDao
     @Override
     public Optional<Token> getTokenByUUID(UUID uuid) {
         return this.tokens.stream().filter(t->t.getId().equals(uuid)).findFirst();
+    }
+
+    @Override
+    public Optional<Token> getTokenByUUID(String uuid) {
+
+        return this.tokens.stream().filter(token -> token.getId().toString().equals(uuid)).findFirst();
     }
 
     @Override
@@ -66,28 +89,11 @@ public class FakeDao
 
     @Override
     public Set<User> getUsers() {
-        return null;
+        return this.clients;
     }
 
-    public void generateFakeClients(){
-
-
-        if(roles.size()==0){
-            roles.add(new Role(0,"ADMIN"));
-            roles.add(new Role(1,"USER"));
-        }
-        if (clients.size()==0){
-
-
-            clients.add(new User(0,"Jan","Pawel"));
-            clients.iterator().next().getRoles().add(new Role(0,"USER"));
-            clients.add(new User(1,"Tomasz","Hajto",null));
-            clients.add(new User(2,"Karol","Wojtyla",null));
-
-        }
-        System.out.println(clients);
-        System.out.println("XDD");
-
+    @Override
+    public Set<Token> getTokens() {
+        return this.tokens;
     }
-
 }

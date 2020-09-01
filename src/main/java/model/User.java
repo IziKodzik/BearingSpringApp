@@ -72,7 +72,6 @@ public class User {
 
     @Override
     public int hashCode() {
-        System.out.println("hash");
         return username.hashCode();
     }
 
