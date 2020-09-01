@@ -27,6 +27,7 @@ public class UserController {
     public ModelAndView home(@PathVariable int id){
 
 
+
         System.out.println(id);
         ModelAndView mav = new ModelAndView("user-home");
         mav.addObject("id","jotde");

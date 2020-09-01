@@ -10,6 +10,10 @@ public class Role {
         this.name = name;
     }
 
+    public Role(String role) {
+        this.name = role;
+    }
+
     public int getId() {
         return id;
     }
@@ -37,5 +41,6 @@ public class Role {
             return false;
         else
             return this.name.equals(((Role)obj).name);
+
     }
 }

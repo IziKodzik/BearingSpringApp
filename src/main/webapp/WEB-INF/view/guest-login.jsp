@@ -17,7 +17,7 @@
     <header class="notice">Welcome to BearingFinder </header>
 
     <section id="login-section" class="form-container">
-        <form:form action="/processLogin" modelAttribute="user" method="post" class="form-container">
+        <form:form action="/test" modelAttribute="user" method="post" class="form-container">
 
             <ul id="login-list">
 

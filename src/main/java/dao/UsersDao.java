@@ -16,6 +16,7 @@ public interface UsersDao {
     Optional<Token> getToken(Token token);
     Optional<Token> getTokenByUserName(String username);
     Optional<Token> getTokenByUUID(UUID uuid);
+    Optional<Token> getTokenByUUID(String uuid);
     boolean refreshToken(Token token);
     //    Optional<Set<Role>> getRolesByUser(User user);
 

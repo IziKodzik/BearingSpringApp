@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import service.SecurityService;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 @Service("SecurityService")
@@ -80,5 +84,33 @@ public class SecurityServiceImpl
 
     }
 
+    @Override
+    public void giveTokenToBrowser(HttpServletResponse response, Token token) {
+        response.addCookie(new Cookie("bearing_token",token.getId().toString()));
+    }
 
+    @Override
+    public boolean hasRole(Cookie cookie, String role) {
+
+        Token token = DB.getTokenByUUID((cookie.getValue())).orElse(null);
+        if(token==null)
+            return false;
+        return (token.getUser().getRoles().contains(new Role(role)));
+
+    }
+
+    @Override
+    public String getTokenUUIDFromCookie(Cookie cookie) {
+        return cookie.getValue();
+    }
+
+    @Override
+    public boolean hasId(ServletRequest request, int id) {
+        return false;
+    }
+
+    @Override
+    public boolean hasRoleAndId(ServletRequest request, String role, int id) {
+        return false;
+    }
 }
