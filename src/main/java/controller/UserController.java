@@ -32,10 +32,9 @@ public class UserController {
     public ModelAndView home(@PathVariable int id,
                              @CookieValue(value = "bearing_token",defaultValue = "empty") String cookie
                             , RedirectAttributes attributes){
-
        if(!(securityService
-                .hasRoleAndId(securityService.getTokenUUIDFromCookie(cookie), "USER", id))) {
-            return securityService.noAuthRedirect(attributes);
+                .hasRoleAndId(securityService.getTokenUUIDFromCookie(cookie), id, "USER","ADMIN"))) {
+           return securityService.noAuthRedirect(attributes);
        }
         ModelAndView mav = new ModelAndView("user-home");
         mav.addObject("id",id);

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
+import service.GuestService;
 import service.SecurityService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,10 +21,13 @@ import javax.servlet.http.HttpServletResponse;
 public class GuestController {
 
     private final SecurityService securityService;
+    private final GuestService guestService;
 
     @Autowired
-    public GuestController(@Qualifier("SecurityService") SecurityService securityService) {
+    public GuestController(@Qualifier("SecurityService") SecurityService securityService,
+                           @Qualifier("guestService") GuestService guestService) {
         this.securityService = securityService;
+        this.guestService = guestService;
     }
 
 
@@ -48,10 +52,8 @@ public class GuestController {
 
     @RequestMapping(method = {RequestMethod.GET})
     public ModelAndView displayLogin(final ModelMap model
-            ,@ModelAttribute("auth") final String auth
-        ,HttpServletRequest request) {
+            ,@ModelAttribute("auth") final String auth) {
 
-        System.out.println(auth + " <---");
         ModelAndView mav = new ModelAndView("guest-login");
         if(auth.equals("F"))
             mav.addObject("badLogin","No authorization");
@@ -69,10 +71,16 @@ public class GuestController {
 
 
         Token token = securityService.authenticateUser(user);
-           String redirect = securityService.redirectv0(token);
+        securityService.giveTokenToBrowser(response,token);
 
-           return new ModelAndView(String.format("redirect:%s", redirect));
+           return guestService.redirect(token);
 
+    }
+
+    @GetMapping("/notAuthenticated")
+    public ModelAndView notAuthenticated(RedirectAttributes attributes){
+//        if(securityService.hasRole(securityService.getTokenUUIDFromCookie(cookie),"NOWAY"))
+            return securityService.noAuthRedirect(attributes);
     }
 
 }

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 import service.SecurityService;
 
 import javax.servlet.http.Cookie;
@@ -90,17 +89,18 @@ public class SecurityServiceImpl
 
     @Override
     public void giveTokenToBrowser(HttpServletResponse response, Token token) {
-        response.addCookie(new Cookie("bearing_token",token.getId().toString()));
+        if(token!=null)
+            response.addCookie(new Cookie("bearing_token",token.getId().toString()));
     }
 
     @Override
-    public boolean hasRole(Token token, String role) {
+    public boolean hasRole(Token token, String... roles) {
 
+        return (token != null && Arrays.stream(roles)
+                .anyMatch(r -> token.getUser().getRoles().contains(new Role(r))));
 
-        return (token!=null && token.getUser().getRoles().contains(new Role(role)) && !token.isExpired());
 
     }
-
     @Override
     public Token getTokenUUIDFromCookie(String cookie) {
         return DB.getTokenByUUID(cookie).orElse(null);
@@ -120,7 +120,7 @@ public class SecurityServiceImpl
     }
 
     @Override
-    public boolean hasRoleAndId(Token token, String role, int id) {
-        return hasRole(token,role) && hasId(token,id);
+    public boolean hasRoleAndId(Token token, int id, String... roles) {
+        return hasRole(token,roles) && hasId(token,id);
     }
 }

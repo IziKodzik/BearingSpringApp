@@ -33,7 +33,7 @@ public class FakeDao
 
             clients.add(new User(0,"Jan","Pawel"));
             clients.iterator().next().getRoles().add(new Role(0,"USER"));
-            clients.add(new User(1,"Tomasz","Hajto",new Role(1,"ADMIN")));
+            clients.add(new User(1,"Tomasz","Hajto",new Role(1,"ADMIN"),new Role(0,"USER")));
             clients.add(new User(2,"Karol","Wojtyla",new Role(1, "ADMIN")));
 
         }
