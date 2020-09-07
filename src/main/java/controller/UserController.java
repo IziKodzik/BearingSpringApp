@@ -1,6 +1,7 @@
 package controller;
 
 
+import model.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -22,7 +23,8 @@ public class UserController {
     final SecurityService securityService;
 
     @Autowired
-    public UserController(@Qualifier("fakeUserService") UserService userService, SecurityService securityService){
+    public UserController(@Qualifier("fakeUserService") UserService userService
+              , SecurityService securityService){
         this.userService = userService;
         this.securityService = securityService;
     }
@@ -32,15 +34,31 @@ public class UserController {
     public ModelAndView home(@PathVariable int id,
                              @CookieValue(value = "bearing_token",defaultValue = "empty") String cookie
                             , RedirectAttributes attributes){
+
+        Token token =  securityService.getTokenUUIDFromCookie(cookie);
        if(!(securityService
-                .hasRoleAndId(securityService.getTokenUUIDFromCookie(cookie), id, "USER","ADMIN"))) {
+                .hasRoleAndId(
+                       token, id, "USER","ADMIN"))) {
            return securityService.noAuthRedirect(attributes);
        }
         ModelAndView mav = new ModelAndView("user-home");
-        mav.addObject("id",id);
+        mav.addObject("id",token.getUser().getUsername() );
         return mav;
     }
 
+    @PostMapping("/calculate")
+    public ModelAndView calculate(@RequestParam("type-of-service") String typeOfService
+            ,@RequestParam("grade-of-thordon") String gradeOfThordon
+            , RedirectAttributes attributes
+        ,@CookieValue(value = "bearing_token",defaultValue = "empty") String cookie) {
+
+        if (!securityService
+                .hasRole(securityService.getTokenUUIDFromCookie(cookie), "USER", "ADMIN"))
+            return securityService.noAuthRedirect(attributes);
+
+        return new ModelAndView("test");
+
+    }
 
     @GetMapping("/account")
     public ModelAndView displayAccount(){

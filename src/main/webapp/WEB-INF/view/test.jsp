@@ -7,20 +7,24 @@
 --%>
 <%@ include file="header.jsp"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <title>ccc</title>
+    <link rel="stylesheet" href="../../resources/css/test.css" type="text/css"/>
 </head>
 <body>
-<form:form action="/test" modelAttribute="JWT" method="post" class="form-container">
+    <button disabled="disabled">butt</button>
 
-    <ul id="login-list">
-        <li><input class="button" formaction="/processLogin" name="logIn" type="submit" value="Log in"/></li>
-        <li><input class="button" formaction="/remind" name="RemindPassword" type="submit" value="Remind me password"/></li>
+    <select name="bonding-agent" id="bonding-agent">
+        <option value="tg-75">TG-75</option>
+        <option value="chocking-compound">Chocking Compound</option>
+        <option value="other">Other</option>
+    </select>
 
+    </select>
+    <div id="test">Color</div>
+    <script src="../../resources/js/main.js"></script>
 
-    </ul>
-
-</form:form>
 </body>
 </html>

@@ -80,7 +80,11 @@ public class FakeDao
 
     @Override
     public boolean refreshToken(Token token) {
-        return false;
+        Optional<Token> maybeToken = this.tokens.stream().filter(t->t.equals(token)).findFirst();
+        if(!maybeToken.isPresent())
+            return false;
+        maybeToken.get().setExpireDate(DateTime.now().plusMinutes(15));
+        return true;
     }
 
     @Override
@@ -96,5 +100,10 @@ public class FakeDao
     @Override
     public Set<Token> getTokens() {
         return this.tokens;
+    }
+
+    @Override
+    public boolean deleteToken(Token token) {
+        return this.tokens.remove(token);
     }
 }

@@ -37,15 +37,30 @@ public class SecurityServiceImpl
         if(logger.getPassword().equals(client.getPassword())) {
 
             Optional<Token> userToken = DB.getTokenByUserName(client.getUsername());
-            if(!(userToken.isPresent())){
-                Optional<User> suspect;
-                do {
-                    userToken = (Optional.of(new Token(UUID.randomUUID())));
-                    suspect = DB.getUserByUsername(client.getUsername());
-                }while (!(suspect.isPresent()));
-                userToken.get().setExpireDate(DateTime.now().plusMinutes(15));
-                DB.addTokenForUser(client,userToken.get());
+            boolean isPresent = userToken.isPresent();
+            boolean isExpired;
+
+            if(isPresent){
+                isExpired = userToken.get().isExpired();
+
+                if(!isExpired) {
+                    System.out.println("Refreshed");
+                    DB.refreshToken(userToken.get());
+                    return userToken.get();
+                }else {
+                    System.out.println("Depricated");
+                    DB.deleteToken(userToken.get());
+                }
             }
+            Optional<User> suspect;
+            do {
+                userToken = (Optional.of(new Token(UUID.randomUUID())));
+                suspect = DB.getUserByUsername(client.getUsername());
+            }while (!(suspect.isPresent()));
+            userToken.get().setExpireDate(DateTime.now().plusMinutes(15));
+            DB.addTokenForUser(client,userToken.get());
+
+
             System.out.println(DB.getUsers() + " <-- users updated");
             System.out.println(DB.getTokens());
             return userToken.get();
@@ -96,20 +111,35 @@ public class SecurityServiceImpl
     @Override
     public boolean hasRole(Token token, String... roles) {
 
-        return (token != null && Arrays.stream(roles)
-                .anyMatch(r -> token.getUser().getRoles().contains(new Role(r))));
+        return (token != null && !token.isExpired() && this.hasRole(token.getUser(),roles));
 
 
     }
+    @Override
+    public boolean hasId(Token token, int id) {
+        return (token!=null&&  !token.isExpired() && this.hasId(token.getUser(),id) );
+
+    }
+
+    @Override
+    public boolean hasRole(User user, String... roles) {
+        return user != null &&
+                Arrays.stream(roles).anyMatch(role->user.getRoles().contains(new Role(role)));
+    }
+
+    @Override
+    public boolean hasId(User user, int id) {
+        return user != null && user.getId()==id;
+    }
+
+    @Override
+    public boolean hasRoleAndId(User user, int id, String... roles) {
+        return hasId(user,id) && hasRole(user,roles);
+    }
+
     @Override
     public Token getTokenUUIDFromCookie(String cookie) {
         return DB.getTokenByUUID(cookie).orElse(null);
-    }
-
-    @Override
-    public boolean hasId(Token token, int id) {
-        return (token!=null&& token.getUser().getId() == id && !token.isExpired());
-
     }
 
     @Override
@@ -123,4 +153,5 @@ public class SecurityServiceImpl
     public boolean hasRoleAndId(Token token, int id, String... roles) {
         return hasRole(token,roles) && hasId(token,id);
     }
+
 }

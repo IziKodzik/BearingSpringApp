@@ -16,8 +16,12 @@ public interface SecurityService {
     Set<Role> parseTokenToRoles(Token token);
     User parseTokenToUser(Token token);
     boolean hasRole(Token token, String... roles);
+    boolean hasRole(User user, String... roles);
     boolean hasId(Token token,int id);
+    boolean hasId(User user,int id);
     boolean hasRoleAndId(Token token,int id,String... roles);
+    boolean hasRoleAndId(User user,int id,String... roles);
+
     void giveTokenToBrowser(HttpServletResponse response,Token token);
     Token getTokenUUIDFromCookie(String request);
     ModelAndView noAuthRedirect(final RedirectAttributes redirectAttributes);

@@ -31,13 +31,12 @@ public class GuestController {
     }
 
 
-//    @GetMapping("/testSend")
-//    public ModelAndView test(final RedirectAttributes redirectAttributes) {
-//        // the following attribute is a ModelAttribute
-//        redirectAttributes.addFlashAttribute("auth", true);
-//        final ModelAndView redirectView = new ModelAndView("redirect:/");
-//        return redirectView;
-//    }
+    @GetMapping("/test")
+    public ModelAndView test(final RedirectAttributes redirectAttributes) {
+        // the following attribute is a ModelAttribute
+
+        return new ModelAndView("test");
+    }
 //    @GetMapping("/testRecive")
 //    public ModelAndView redirectedPage(
 //            // access FlashAttributes

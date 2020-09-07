@@ -24,7 +24,7 @@ ul{
 
 }
 
-.form-container ul{
+#login-section .form-container ul{
 
     padding: 60px 50px;
     box-shadow: 0 0 10px 0 black;
@@ -58,6 +58,13 @@ ul li input{
     border-radius: 10px;
     padding: 10px 20px 5px 20px;
     margin: 10px 20px 5px 20px;
+
+}
+
+#calculator.form-container{
+
+    text-align: left;
+    float: left;
 
 }
 
