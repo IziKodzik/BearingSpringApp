@@ -21,6 +21,11 @@
         <option value="chocking-compound">Chocking Compound</option>
         <option value="other">Other</option>
     </select>
+    <br>
+    <select name="grooved-bearing-style" id="grooved-bearing-style">
+        <option value="grooved">Grooved</option>
+        <option value="none">None</option>
+    </select>
 
     </select>
     <div id="test">Color</div>
