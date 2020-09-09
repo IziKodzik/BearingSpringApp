@@ -197,10 +197,7 @@
         <input type="checkbox" id="rudder-pintle-bearing" name="rudder-pintle-bearing" value="rudder-pintle-bearing">
         <br>
 
-
-
     </form>
-
 
 </section>
 

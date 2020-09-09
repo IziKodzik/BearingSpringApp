@@ -57,7 +57,7 @@ public class SecurityServiceImpl
                 userToken = (Optional.of(new Token(UUID.randomUUID())));
                 suspect = DB.getUserByUsername(client.getUsername());
             }while (!(suspect.isPresent()));
-            userToken.get().setExpireDate(DateTime.now().plusMinutes(15));
+            userToken.get().setExpireDate(DateTime.now().plusHours(1));
             DB.addTokenForUser(client,userToken.get());
 
 
