@@ -24,6 +24,6 @@ public interface SecurityService {
 
     void giveTokenToBrowser(HttpServletResponse response,Token token);
     Token getTokenUUIDFromCookie(String request);
-    ModelAndView noAuthRedirect(final RedirectAttributes redirectAttributes);
+    ModelAndView noAuthRedirect(final RedirectAttributes redirectAttributes,String from);
 
 }

@@ -31,7 +31,7 @@
 
             </ul>
 
-            <form:input path=""
+            <form:input path="from" type="hidden" value="${from}"></form:input>
 
         </form:form>
 
