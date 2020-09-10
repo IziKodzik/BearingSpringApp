@@ -1,5 +1,6 @@
 package controller;
 
+import model.DTOs.Request.LoginForm;
 import model.Token;
 import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,18 +58,19 @@ public class GuestController {
         if(auth.equals("F"))
             mav.addObject("badLogin","No authorization");
 
-        User user = new User();
-        model.addAttribute("user",user);
+        LoginForm form = new LoginForm();
+        model.addAttribute("login-form",form);
 
         return mav;
 
     }
     @PostMapping("/processLogin")
     public ModelAndView processLogin (final RedirectAttributes redirectAttributes
-        ,@ModelAttribute("user") User user,final Model model
+        ,@ModelAttribute("login-form") LoginForm form,final Model model
             ,HttpServletResponse response){
 
 
+        User user = new User(form.getUsername(),form.getPassword());
         Token token = securityService.authenticateUser(user);
         securityService.giveTokenToBrowser(response,token);
 

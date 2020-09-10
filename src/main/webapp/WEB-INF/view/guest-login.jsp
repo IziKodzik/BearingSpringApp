@@ -17,7 +17,7 @@
     <header class="notice">Welcome to BearingFinder </header>
 
     <section id="login-section" class="form-container">
-        <form:form modelAttribute="user" method="post" class="form-container">
+        <form:form modelAttribute="login-form" method="post" class="form-container">
 
             <ul id="login-list">
 
@@ -29,8 +29,9 @@
                 <li><input class="button" formaction="/processLogin" name="logIn" type="submit" value="Log in"/></li>
                 <li><input class="button" formaction="/remind" name="RemindPassword" type="submit" value="Remind me password"/></li>
 
-
             </ul>
+
+            <form:input path=""
 
         </form:form>
 
