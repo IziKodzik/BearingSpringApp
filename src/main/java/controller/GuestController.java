@@ -56,8 +56,13 @@ public class GuestController {
 
         ModelAndView mav = new ModelAndView("guest-login");
         if(!(from.isEmpty())) {
-            mav.addObject("badLogin", "No authorization");
-            mav.addObject("from",from);
+            if(from.equals("F")) {
+                mav.addObject("from", "");
+                mav.addObject("badLogin", "You can not continue session");
+            }else {
+                mav.addObject("from", from);
+                mav.addObject("badLogin", "No authorization");
+            }
         }
         LoginForm form = new LoginForm();
         model.addAttribute("login-form",form);
@@ -70,20 +75,22 @@ public class GuestController {
         ,@ModelAttribute("login-form") LoginForm form,final Model model
             ,HttpServletResponse response){
 
-        System.out.println(form.getFrom() + " FROM");
+        System.out.println(form.getFrom() + " process");
         User user = new User(form.getUsername(),form.getPassword());
         Token token = securityService.authenticateUser(user);
         securityService.giveTokenToBrowser(response,token);
+        redirectAttributes.addFlashAttribute("from",form.getFrom());
 
-        return guestService.redirect(token);
+        return guestService.redirect(token,form.getFrom());
 
     }
 
     @GetMapping("/notAuthenticated")
     public ModelAndView notAuthenticated(RedirectAttributes attributes,
-                                         HttpServletRequest request){
+                                         HttpServletRequest request,
+                                            @ModelAttribute("from") String from){
 //        if(securityService.hasRole(securityService.getTokenUUIDFromCookie(cookie),"NOWAY"))
-            return securityService.noAuthRedirect(attributes,request.getRequestURL().toString());
+            return securityService.noAuthRedirect(attributes,from,request.getRequestURL().toString());
     }
 
 }

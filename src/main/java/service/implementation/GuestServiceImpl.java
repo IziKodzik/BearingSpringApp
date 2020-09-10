@@ -14,7 +14,10 @@ public class GuestServiceImpl
 
 
     @Override
-    public ModelAndView redirect(Token token) {
+    public ModelAndView redirect(Token token,String from) {
+        if(!(from.isEmpty()))
+            return new ModelAndView(String.format("redirect:%s",from));
+
         if(token == null)
             return new ModelAndView("redirect:/notAuthenticated");
         User user = token.getUser();

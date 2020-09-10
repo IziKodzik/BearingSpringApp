@@ -143,8 +143,16 @@ public class SecurityServiceImpl
     }
 
     @Override
-    public ModelAndView noAuthRedirect(final RedirectAttributes redirectAttributes,String from) {
-        redirectAttributes.addFlashAttribute("from",from);
+    public ModelAndView noAuthRedirect(final RedirectAttributes redirectAttributes,String fromAttrib
+            ,String fromURL) {
+
+        System.out.println(fromAttrib + " in noAuth");
+        if(fromAttrib.isEmpty())
+            redirectAttributes.addFlashAttribute("from",fromURL);
+        else
+            redirectAttributes.addFlashAttribute("from","F");
+
+
         return new ModelAndView("redirect:/");
 
     }

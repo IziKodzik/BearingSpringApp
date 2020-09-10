@@ -5,6 +5,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 public interface GuestService {
 
-    ModelAndView redirect(Token token);
+    ModelAndView redirect(Token token,String from);
 
 }

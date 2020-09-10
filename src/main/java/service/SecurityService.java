@@ -21,9 +21,8 @@ public interface SecurityService {
     boolean hasId(User user,int id);
     boolean hasRoleAndId(Token token,int id,String... roles);
     boolean hasRoleAndId(User user,int id,String... roles);
-
     void giveTokenToBrowser(HttpServletResponse response,Token token);
     Token getTokenUUIDFromCookie(String request);
-    ModelAndView noAuthRedirect(final RedirectAttributes redirectAttributes,String from);
+    ModelAndView noAuthRedirect(final RedirectAttributes redirectAttributes,String fromAttrib,String from);
 
 }

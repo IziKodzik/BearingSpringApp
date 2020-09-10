@@ -33,13 +33,17 @@ public class UserController {
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public ModelAndView home(@PathVariable int id,
                              @CookieValue(value = "bearing_token",defaultValue = "empty") String cookie
-                            , RedirectAttributes attributes,HttpServletRequest request){
+                            , RedirectAttributes attributes,HttpServletRequest request
+                            , @ModelAttribute("from") String from){
+
+        System.out.println(from + " controller");
 
         Token token =  securityService.getTokenUUIDFromCookie(cookie);
        if(!(securityService
                 .hasRoleAndId(
                        token, id, "USER","ADMIN"))) {
-           return securityService.noAuthRedirect(attributes,request.getRequestURL().toString());
+           return securityService.noAuthRedirect(attributes,
+                   from,request.getRequestURL().toString());
        }
         ModelAndView mav = new ModelAndView("user-home");
         mav.addObject("id",token.getUser().getUsername() );
@@ -51,11 +55,12 @@ public class UserController {
             ,@RequestParam("grade-of-thordon") String gradeOfThordon
             , RedirectAttributes attributes
         ,@CookieValue(value = "bearing_token",defaultValue = "empty") String cookie
-            ,HttpServletRequest request) {
+            ,HttpServletRequest request,
+                                  @ModelAttribute("from") String from) {
 
         if (!securityService
                 .hasRole(securityService.getTokenUUIDFromCookie(cookie), "USER", "ADMIN"))
-            return securityService.noAuthRedirect(attributes,request.getRequestURL().toString());
+            return securityService.noAuthRedirect(attributes,from,request.getRequestURL().toString());
 
         return new ModelAndView("test");
 
