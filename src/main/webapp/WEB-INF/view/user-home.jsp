@@ -17,10 +17,12 @@
 <header class="notice">Welcome ${id}</header>
 <nav>
 
-    <ul class="horizontal-list">
-        <li><input class="button" type="submit" value="Calculations"/></li>
-        <li><input class="button" type="submit" value="Account"/></li>
+    <form:form method="post">
+        <ul class="horizontal-list">
+        <li><input class="button" type="submit" value="calculations"/></li>
+        <li><input class="button" type="submit" value="account"/></li>
     </ul>
+    </form:form>
 
 
 

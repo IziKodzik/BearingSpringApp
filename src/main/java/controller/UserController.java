@@ -32,7 +32,8 @@ public class UserController {
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
     public ModelAndView home(@PathVariable int id,
-                             @CookieValue(value = "bearing_token",defaultValue = "empty") String cookie
+                             @CookieValue(value = "bearing_token"
+                                     ,defaultValue = "empty") String cookie
                             , RedirectAttributes attributes,HttpServletRequest request
                             , @ModelAttribute("from") String from){
 
@@ -66,10 +67,15 @@ public class UserController {
 
     }
 
-    @GetMapping("/account")
-    public ModelAndView displayAccount(){
+    @GetMapping("/{id}/account")
+    public ModelAndView displayAccount(@PathVariable int id,
+                                        @CookieValue(value ="bearing_token",defaultValue = "empty") String cookie,
+                                       RedirectAttributes attributes,@ModelAttribute("from") String fromAttrib,
+                                       HttpServletRequest request){
+        if(!(securityService.hasRoleAndId(securityService.getTokenUUIDFromCookie(cookie), id, "USER")))
+            return securityService.noAuthRedirect(attributes,fromAttrib,request.getRequestURL().toString());
 
-        ModelAndView mav = new ModelAndView("account");
+        ModelAndView mav = new ModelAndView("user-account");
         return mav;
 
     }

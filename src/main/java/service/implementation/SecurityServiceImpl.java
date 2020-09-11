@@ -146,11 +146,12 @@ public class SecurityServiceImpl
     public ModelAndView noAuthRedirect(final RedirectAttributes redirectAttributes,String fromAttrib
             ,String fromURL) {
 
+
         System.out.println(fromAttrib + " in noAuth");
-        if(fromAttrib.isEmpty())
-            redirectAttributes.addFlashAttribute("from",fromURL);
-        else
+        if(!(fromAttrib.isEmpty()))
             redirectAttributes.addFlashAttribute("from","F");
+        else
+            redirectAttributes.addFlashAttribute("from",fromURL);
 
 
         return new ModelAndView("redirect:/");

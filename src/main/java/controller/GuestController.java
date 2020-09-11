@@ -55,15 +55,20 @@ public class GuestController {
             ,@ModelAttribute("from") final String from) {
 
         ModelAndView mav = new ModelAndView("guest-login");
+        System.out.println(from + " In guest");
         if(!(from.isEmpty())) {
             if(from.equals("F")) {
                 mav.addObject("from", "");
-                mav.addObject("badLogin", "You can not continue session");
+                mav.addObject("badLogin", "You could not continue session");
             }else {
-                mav.addObject("from", from);
+                if(!from.contains("notAuthenticated"))
+                    mav.addObject("from", from);
+                else
+                    mav.addObject("from","");
                 mav.addObject("badLogin", "No authorization");
             }
         }
+
         LoginForm form = new LoginForm();
         model.addAttribute("login-form",form);
 
