@@ -17,7 +17,7 @@
 <header class="notice">Welcome ${id}</header>
 <nav>
 
-    <form:form method="post">
+    <form:form method="get">
         <ul class="horizontal-list">
         <li><input class="button" type="submit" value="calculations"/></li>
         <li><input class="button" type="submit" value="account"/></li>
@@ -201,7 +201,8 @@
 
     </form>
 
-</section>
 
+</section>
+<script src="../../resources/js/user-home.js"></script>
 </body>
 </html>

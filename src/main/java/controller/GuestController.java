@@ -55,16 +55,15 @@ public class GuestController {
             ,@ModelAttribute("from") final String from) {
 
         ModelAndView mav = new ModelAndView("guest-login");
-        System.out.println(from + " In guest");
         if(!(from.isEmpty())) {
             if(from.equals("F")) {
                 mav.addObject("from", "");
                 mav.addObject("badLogin", "You could not continue session");
             }else {
-                if(!from.contains("notAuthenticated"))
-                    mav.addObject("from", from);
-                else
+                if(from.contains("notAuthenticated"))
                     mav.addObject("from","");
+                else
+                    mav.addObject("from", from);
                 mav.addObject("badLogin", "No authorization");
             }
         }
@@ -80,7 +79,6 @@ public class GuestController {
         ,@ModelAttribute("login-form") LoginForm form,final Model model
             ,HttpServletResponse response){
 
-        System.out.println(form.getFrom() + " process");
         User user = new User(form.getUsername(),form.getPassword());
         Token token = securityService.authenticateUser(user);
         securityService.giveTokenToBrowser(response,token);
@@ -94,7 +92,6 @@ public class GuestController {
     public ModelAndView notAuthenticated(RedirectAttributes attributes,
                                          HttpServletRequest request,
                                             @ModelAttribute("from") String from){
-//        if(securityService.hasRole(securityService.getTokenUUIDFromCookie(cookie),"NOWAY"))
             return securityService.noAuthRedirect(attributes,from,request.getRequestURL().toString());
     }
 

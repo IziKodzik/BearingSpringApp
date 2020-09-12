@@ -1,0 +1,23 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: gray;
+}
+body #application{
+    width: 680px;
+    height: 590px;
+    padding: 0;
+    margin: auto;
+    background-image: url("../images/app-views/user0.PNG");
+}
+body #application button.invisible{
+
+    background: transparent;
+    border: none !important;
+    font-size:0;
+    padding: 0;
+    margin: 0;
+}

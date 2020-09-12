@@ -6,6 +6,7 @@ import model.User;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Set;
 
@@ -24,5 +25,5 @@ public interface SecurityService {
     void giveTokenToBrowser(HttpServletResponse response,Token token);
     Token getTokenUUIDFromCookie(String request);
     ModelAndView noAuthRedirect(final RedirectAttributes redirectAttributes,String fromAttrib,String from);
-
+    void logout(HttpServletRequest request,HttpServletResponse response);
 }

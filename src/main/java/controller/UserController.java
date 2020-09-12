@@ -13,6 +13,8 @@ import service.UserService;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 @Controller
 @RequestMapping("/user")
@@ -37,7 +39,6 @@ public class UserController {
                             , RedirectAttributes attributes,HttpServletRequest request
                             , @ModelAttribute("from") String from){
 
-        System.out.println(from + " controller");
 
         Token token =  securityService.getTokenUUIDFromCookie(cookie);
        if(!(securityService
@@ -67,17 +68,46 @@ public class UserController {
 
     }
 
+    @GetMapping("{id}/test")
+    public ModelAndView test(@PathVariable int id,@RequestParam("jd") int jd,
+                             @CookieValue(value = "bearing_token",defaultValue = "empty") String cookie,
+                             @ModelAttribute("from") String from,HttpServletRequest request,
+                             RedirectAttributes attributes){
+        if(!securityService.hasRoleAndId(securityService.getTokenUUIDFromCookie(cookie),id,"USER"))
+            return securityService.noAuthRedirect(attributes,request.getRequestURL().toString(),from);
+        System.out.println(jd);
+        return new ModelAndView("test");
+    }
+
     @GetMapping("/{id}/account")
     public ModelAndView displayAccount(@PathVariable int id,
-                                        @CookieValue(value ="bearing_token",defaultValue = "empty") String cookie,
-                                       RedirectAttributes attributes,@ModelAttribute("from") String fromAttrib,
+                                        @CookieValue(value ="bearing_token",
+                                                defaultValue = "empty") String cookie,
+                                       RedirectAttributes attributes,
+                                       @ModelAttribute("from") String fromAttrib,
                                        HttpServletRequest request){
         if(!(securityService.hasRoleAndId(securityService.getTokenUUIDFromCookie(cookie), id, "USER")))
-            return securityService.noAuthRedirect(attributes,fromAttrib,request.getRequestURL().toString());
+            return securityService
+                    .noAuthRedirect(attributes,fromAttrib,request.getRequestURL().toString());
 
         ModelAndView mav = new ModelAndView("user-account");
         return mav;
 
+    }
+
+    @RequestMapping(value = "/logout",method = RequestMethod.GET)
+    public ModelAndView logout(HttpServletRequest request, HttpServletResponse response){
+//        response.addCookie(new Cookie("bearing_token",token.getId().toString()));
+
+        securityService.logout(request,response);
+        return new ModelAndView("redirect:/");
+    }
+
+    @GetMapping("{id}/calculations")
+    public ModelAndView displayCalculations(@PathVariable int id){
+        ModelAndView mav = new ModelAndView("user-calculation");
+
+        return mav;
     }
 
 

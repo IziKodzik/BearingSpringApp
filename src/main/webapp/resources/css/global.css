@@ -120,6 +120,23 @@ ul.horizontal-list li {
     }
 }
 
+.application {
+
+    /*min-width: 0px;*/
+    /*min-height: 0px;*/
+    /*position: absolute;*/
+    /*left: 10px;*/
+    /*display: inline-block;*/
+    /*background-color: gray;*/
+
+    background-image: url("/resources/images/app-views/user0.PNG");
+}
+.test{
+
+    position: absolute;
+    left: 100px;
+    top: 5000px;
+}
 
 
 

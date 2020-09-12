@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.SecurityService;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
@@ -147,7 +148,6 @@ public class SecurityServiceImpl
             ,String fromURL) {
 
 
-        System.out.println(fromAttrib + " in noAuth");
         if(!(fromAttrib.isEmpty()))
             redirectAttributes.addFlashAttribute("from","F");
         else
@@ -156,6 +156,19 @@ public class SecurityServiceImpl
 
         return new ModelAndView("redirect:/");
 
+    }
+
+    @Override
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
+
+        Arrays.stream(request.getCookies()).forEach(c-> {
+            if(c.getName().equals("bearing_token")) {
+                c.setValue("");
+                c.setPath("/");
+                c.setMaxAge(0);
+                response.addCookie(c);
+            }
+        });
     }
 
     @Override
