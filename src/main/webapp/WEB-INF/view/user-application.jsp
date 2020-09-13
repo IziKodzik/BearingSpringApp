@@ -19,6 +19,6 @@
     </div>
 
     <div class="test">dziala</div>
-    <script src="../../resources/js/user-calculations.js" type="text/javascript"></script>
+    <script src="../../resources/js/user-application.js" type="text/javascript"></script>
 </body>
 </html>

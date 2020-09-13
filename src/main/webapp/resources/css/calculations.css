@@ -13,11 +13,3 @@ body #application{
     margin: auto;
     background-image: url("../images/app-views/user0.PNG");
 }
-body #application button.invisible{
-
-    background: transparent;
-    border: none !important;
-    font-size:0;
-    padding: 0;
-    margin: 0;
-}

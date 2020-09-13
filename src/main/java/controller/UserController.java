@@ -11,10 +11,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.SecurityService;
 import service.UserService;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 
 @Controller
 @RequestMapping("/user")
@@ -103,11 +101,21 @@ public class UserController {
         return new ModelAndView("redirect:/");
     }
 
-    @GetMapping("{id}/calculations")
+    @GetMapping("{id}/application")
     public ModelAndView displayCalculations(@PathVariable int id){
-        ModelAndView mav = new ModelAndView("user-calculation");
+        ModelAndView mav = new ModelAndView("user-application");
 
         return mav;
+    }
+
+    @PostMapping("{id}/application/click")
+    public ModelAndView click(@PathVariable int id,
+                              @RequestParam("x") int x,
+                              @RequestParam("y") int y){
+
+        System.out.println(x + " " + y);
+        return new ModelAndView(String.format(("redirect:/user/%d/application"),id));
+
     }
 
 
