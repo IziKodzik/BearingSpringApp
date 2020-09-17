@@ -13,7 +13,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan({"filter","controller","service","model","dao"})
+@ComponentScan({"controller","service","model","dao"})
 public class WebConfig
     implements WebMvcConfigurer {
 
@@ -33,7 +33,9 @@ public class WebConfig
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/")
+        .setCachePeriod(0);
+
     }
 
 

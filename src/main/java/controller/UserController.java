@@ -13,6 +13,10 @@ import service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -101,21 +105,46 @@ public class UserController {
         return new ModelAndView("redirect:/");
     }
 
-    @GetMapping("{id}/application")
-    public ModelAndView displayCalculations(@PathVariable int id){
+    @GetMapping("{id}/app")
+    public ModelAndView displayCalculations(@PathVariable int id,
+                                            @ModelAttribute("view") String view){
         ModelAndView mav = new ModelAndView("user-application");
-
+        mav.addObject("appView",view);
         return mav;
     }
 
-    @PostMapping("{id}/application/click")
+    @PostMapping("{id}/app/click")
     public ModelAndView click(@PathVariable int id,
                               @RequestParam("x") int x,
-                              @RequestParam("y") int y){
+                              @RequestParam("y") int y,
+                              RedirectAttributes attributes){
 
         System.out.println(x + " " + y);
-        return new ModelAndView(String.format(("redirect:/user/%d/application"),id));
+        try {
+            attributes.addFlashAttribute("view",
+                 createColorMap(userService.click(id, x, y)));
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ModelAndView(String.format(("redirect:/user/%d/app"),id));
+
+    }
+
+    private StringBuffer createColorMap(BufferedImage bufferedImage){
+        StringBuffer result = new StringBuffer();
+        for(int op = 0 ; op < bufferedImage.getHeight() ; ++ op){
+            for(int po = 0 ; po < bufferedImage.getWidth(); ++ po){
+
+                int color = bufferedImage.getRGB(po,op);
+                int r = (color) & 255;
+                int g = (color >> 8) & 255;
+                int b = (color >> 16) & 255;
+                result.append(color).append(",");
+
+            }
+        }
+        return result;
     }
 
 

@@ -5,11 +5,11 @@
 
 body{
     background-color: gray;
+    text-align: center;
 }
 body #application{
-    width: 680px;
-    height: 590px;
+    display: inline-block;
+    overflow: hidden;
     padding: 0;
     margin: auto;
-    background-image: url("../images/app-views/user0.PNG");
 }
