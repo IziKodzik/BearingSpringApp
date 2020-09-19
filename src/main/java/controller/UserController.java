@@ -137,9 +137,7 @@ public class UserController {
             for(int po = 0 ; po < bufferedImage.getWidth(); ++ po){
 
                 int color = bufferedImage.getRGB(po,op);
-                int r = (color) & 255;
-                int g = (color >> 8) & 255;
-                int b = (color >> 16) & 255;
+
                 result.append(color).append(",");
 
             }

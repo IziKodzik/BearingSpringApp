@@ -10,10 +10,7 @@ import service.UserService;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.*;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
@@ -25,7 +22,7 @@ public class CoordinatesUserServiceImpl
 
     private final String userResources="src/main/webapp/resources/images/app-views/";
     private final UsersDao usersDao;
-
+    Gson g = new Gson();
     @Autowired
     public CoordinatesUserServiceImpl(@Qualifier("fakeDao") UsersDao usersDao) throws SocketException {
         this.usersDao = usersDao;
@@ -34,14 +31,10 @@ public class CoordinatesUserServiceImpl
 
     @Override
     public BufferedImage click(int userId, int x, int y) throws IOException {
-        Gson g = new Gson();
+
         ClientActionRequest clientActionRequest = new ClientActionRequest("",x,y,userId);
         return sendRequest(g.toJson(clientActionRequest));
 
-    }
-
-    private BufferedImage buildImage(int size,byte[] bytes) throws IOException {
-        return ImageIO.read(new ByteArrayInputStream(bytes));
     }
 
     @Override
@@ -67,14 +60,16 @@ public class CoordinatesUserServiceImpl
     private BufferedImage sendRequest(String message) throws IOException {
 
         Socket socket = new Socket("localhost",2137);
-        OutputStream writer = socket.getOutputStream();
-        writer.write(message.getBytes());
-        writer.flush();
-        InputStream reader = socket.getInputStream();
-        byte[] data = new byte[4];
-        reader.read(data);
+        OutputStream output = socket.getOutputStream();
+        InputStream input = socket.getInputStream();
+        byte[] data = ByteBuffer.allocate(4).putInt(message.length()).array();
+        output.write(data);
+        data = message.getBytes();
+        output.write(data);
+        data = new byte[4];
+        int read = input.read(data);
         data = new byte[ByteBuffer.wrap(data).asIntBuffer().get()];
-        reader.read(data);
+        read = input.read(data);
 
         return ImageIO.read(new ByteArrayInputStream(data));
 

@@ -15,12 +15,12 @@
     <title>Title</title>
 </head>
 <body>
-    calculations
+
     <div id="application">   <input id="bitmap" type="hidden" value="${appView}">
         <canvas width="680" height="590"></canvas>
         <%--        <img src="../../resources/images/app-views/user0.PNG" alt="app-view">--%>
     </div>
-    <div class="test">dziala</div>
+    <div class="test"></div>
     <script src="../../resources/js/user-application.js" type="text/javascript"></script>
 </body>
 </html>
