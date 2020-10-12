@@ -1,6 +1,7 @@
 package service;
 
 import model.User;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -14,6 +15,7 @@ public interface UserService {
     BufferedImage fill(int userId,String content);
     BufferedImage clickThenFill(int userId,int x,int y,String content);
     BufferedImage action() throws IOException;
-
-
+	BufferedImage openDesktop(int id) throws IOException;
+	BufferedImage loadAppView(int id) throws IOException;
+	BufferedImage reloadAppView(int id) throws IOException;
 }

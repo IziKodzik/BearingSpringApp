@@ -11,9 +11,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.SecurityService;
 import service.UserService;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,11 +108,21 @@ public class UserController {
     }
 
     @GetMapping("{id}/app")
-    public ModelAndView displayCalculations(@PathVariable int id,
-                                            @ModelAttribute("view") String view){
+    public ModelAndView openApp(@PathVariable int id,
+								@ModelAttribute("view") String view,
+								RedirectAttributes attributes){
+
         ModelAndView mav = new ModelAndView("user-application");
+        if(view.isEmpty()){
+			try {
+				view = createColorMap(this.userService.loadAppView(id)).toString();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
         mav.addObject("appView",view);
-        return mav;
+
+		return mav;
     }
 
     @PostMapping("{id}/app/click")
@@ -132,12 +144,11 @@ public class UserController {
     }
 
     private StringBuffer createColorMap(BufferedImage bufferedImage){
-        StringBuffer result = new StringBuffer();
+
+		StringBuffer result = new StringBuffer();
         for(int op = 0 ; op < bufferedImage.getHeight() ; ++ op){
             for(int po = 0 ; po < bufferedImage.getWidth(); ++ po){
-
                 int color = bufferedImage.getRGB(po,op);
-
                 result.append(color).append(",");
 
             }

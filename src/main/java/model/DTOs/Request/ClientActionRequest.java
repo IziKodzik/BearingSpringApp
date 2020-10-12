@@ -2,25 +2,30 @@ package model.DTOs.Request;
 
 public class ClientActionRequest {
 
-    private String toFill;
+    private String command;
     private int x;
     private int y;
     private int userId;
 
 
-    public ClientActionRequest(String toFill, int x, int y, int userId) {
-        this.toFill = toFill;
+    public ClientActionRequest(String command, int x, int y, int userId) {
+        this.command = command;
         this.x = x;
         this.y = y;
         this.userId = userId;
     }
 
-    public String getToFill() {
-        return toFill;
+	public ClientActionRequest(String command, int userId) {
+		this.command = command;
+		this.userId = userId;
+	}
+
+	public String getCommand() {
+        return command;
     }
 
-    public void setToFill(String toFill) {
-        this.toFill = toFill;
+    public void setCommand(String command) {
+        this.command = command;
     }
 
     public int getX() {
@@ -46,4 +51,14 @@ public class ClientActionRequest {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+	public String toString() {
+		return "ClientActionRequest{" +
+				"command='" + command + '\'' +
+				", x=" + x +
+				", y=" + y +
+				", userId=" + userId +
+				'}';
+	}
+
 }
