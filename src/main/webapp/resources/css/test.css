@@ -1,4 +1,22 @@
 *{
     color:green;
-    background-color: black;
+    background-color: gold;
+}
+
+#filler{
+
+    position: fixed;
+    background-color: red;
+    left: 20px;
+    bottom: 20px;
+
+}
+.rect{
+    background: blue;
+    color:red;
+    position:fixed;
+    top:100px;
+    left: 100px;
+    width: 75px;
+    height: 126px;
 }

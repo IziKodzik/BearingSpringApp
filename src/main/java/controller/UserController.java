@@ -14,6 +14,7 @@ import service.UserService;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.html.ImageView;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -142,8 +143,33 @@ public class UserController {
         return new ModelAndView(String.format(("redirect:/user/%d/app"),id));
 
     }
+	@PostMapping("{id}/app/fill")
+	public ModelAndView clickThenFill(@PathVariable int id,
+							  @RequestParam("x") int x,
+							  @RequestParam("y") int y,
+							  @RequestParam("command") String command,
+							  RedirectAttributes attributes){
 
-    private StringBuffer createColorMap(BufferedImage bufferedImage){
+		try {
+			attributes.addFlashAttribute("view",
+					createColorMap(userService.clickThenFill(id, x, y,command)));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new ModelAndView(String.format(("redirect:/user/%d/app"),id));
+
+	}
+
+
+	@GetMapping("/test")
+	public ModelAndView test(){
+		return new ModelAndView("test");
+	}
+
+
+
+	private StringBuffer createColorMap(BufferedImage bufferedImage){
 
 		StringBuffer result = new StringBuffer();
         for(int op = 0 ; op < bufferedImage.getHeight() ; ++ op){

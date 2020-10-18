@@ -7,6 +7,11 @@ body{
     background-color: gray;
     text-align: center;
 }
+#filler{
+
+    position:absolute;
+
+}
 body #application{
     display: inline-block;
     overflow: hidden;

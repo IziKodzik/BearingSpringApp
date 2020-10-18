@@ -4,19 +4,26 @@ const appWidth = application.offsetWidth;
 const appHeight = application.offsetHeight;
 const cnv = application.querySelector('canvas');
 const ctx = cnv.getContext('2d');
+const filler = document.getElementById("filler");
 const bitmap = document.getElementById("bitmap");
 application.addEventListener('click',createHitMap);
 createView();
 
 
 
-function createHitMap(event) {
-    const x=event.clientX-application.offsetLeft;
-    const y=event.clientY-application.offsetTop;
-    console.log((x + " " + y));
-    var params = new URLSearchParams(window.location.search);
 
-    post(document.location.href + "/click?x="+x+"&y="+y,2,'post');
+function createHitMap(event) {
+
+    const x=event.pageX-application.offsetLeft;
+    const y=event.pageY-application.offsetTop;
+    var path=document.location.href;
+    if(filler.value === ""){
+        path+="/click?";
+    }else{
+        path+="/fill?command="+filler.value+"&";
+    }
+    path+= "x="+x+"&y="+y;
+    post(path,3,'post');
 
 }
 function createView(){
@@ -35,7 +42,7 @@ function createView(){
         ctx.fillStyle = style;
         ctx.fillRect(x,y,x+1,y+1);
         x++;
-        if(x===680){
+        if(x===683){
             x=0;
             y++;
         }
@@ -50,24 +57,3 @@ function post(path,params,method='post') {
     body.removeChild(form);
 
 }
-function createButtonHitMap() {
-
-     console.log(appHeight);
-     console.log(appWidth);
-     const buttonWidth = 20;
-     const buttonHeight = 10;
-     const buttonsAmount = appHeight/buttonHeight * appWidth/buttonWidth;
-     for(let op=0;op<buttonsAmount;++op){
-         const button = document.createElement("button");
-         button.style.height=buttonHeight +"px";
-         button.style.width=buttonWidth +"px";
-         button.className = "invisible";
-         button.addEventListener('click',function () {
-             const xPos = buttonWidth/2  + button.offsetLeft - application.offsetLeft ;
-             const yPos = buttonHeight/2  + button.offsetTop - application.offsetTop ;
-             button.
-             console.log("X=" + xPos + ", Y=" + yPos);
-         });
-         application.appendChild(button);
-     }
- }

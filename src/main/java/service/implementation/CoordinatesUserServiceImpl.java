@@ -9,6 +9,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.UserService;
 
 import javax.imageio.ImageIO;
+import javax.swing.text.html.ImageView;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.*;
@@ -28,11 +29,10 @@ public class CoordinatesUserServiceImpl
 
 
 
-
     @Override
     public BufferedImage click(int userId, int x, int y) throws IOException {
 
-        ClientActionRequest clientActionRequest = new ClientActionRequest("",x,y,userId);
+        ClientActionRequest clientActionRequest = new ClientActionRequest("click",x,y,userId);
         return sendRequestAndGetImage(g.toJson(clientActionRequest));
 
     }
@@ -44,9 +44,9 @@ public class CoordinatesUserServiceImpl
     }
 
     @Override
-    public BufferedImage clickThenFill(int userId, int x, int y, String content) {
-
-        return null;
+    public BufferedImage clickThenFill(int userId, int x, int y, String content) throws IOException {
+		ClientActionRequest clientActionRequest = new ClientActionRequest(String.format("fill:%s",content),x,y,userId);
+        return sendRequestAndGetImage(g.toJson(clientActionRequest));
     }
 
     @Override

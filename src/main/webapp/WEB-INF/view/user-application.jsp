@@ -17,8 +17,13 @@
 <body>
 
     <div id="application">   <input id="bitmap" type="hidden" value="${appView}">
-        <canvas width="680" height="590"></canvas>
+        <canvas width="708" height="611"></canvas>
         <%--        <img src="../../resources/images/app-views/user0.PNG" alt="app-view">--%>
+    </div>
+
+
+    <div class="controller">
+        <input id="filler" type="text">
     </div>
     <div class="test"></div>
     <script src="../../resources/js/user-application.js" type="text/javascript"></script>

@@ -13,7 +13,7 @@ public interface UserService {
 
     BufferedImage click(int id, int x, int y) throws IOException;
     BufferedImage fill(int userId,String content);
-    BufferedImage clickThenFill(int userId,int x,int y,String content);
+    BufferedImage clickThenFill(int userId,int x,int y,String content) throws IOException;
     BufferedImage action() throws IOException;
 	BufferedImage openDesktop(int id) throws IOException;
 	BufferedImage loadAppView(int id) throws IOException;

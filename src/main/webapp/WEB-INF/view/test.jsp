@@ -12,24 +12,17 @@
 <head>
     <title>ccc</title>
     <link rel="stylesheet" href="../../resources/css/test.css" type="text/css"/>
+    <meta name = "viewport" content = "initial-scale = .25, minimum-scale = .25, maximum-scale= .25, width = device-width">
+
 </head>
+<input id="filler" type="text">
+
 <body>
-    <button disabled="disabled">butt</button>
 
-    <select name="bonding-agent" id="bonding-agent">
-        <option value="tg-75">TG-75</option>
-        <option value="chocking-compound">Chocking Compound</option>
-        <option value="other">Other</option>
-    </select>
-    <br>
-    <select name="grooved-bearing-style" id="grooved-bearing-style">
-        <option value="grooved">Grooved</option>
-        <option value="none">None</option>
-    </select>
+<p id="p2" class="rect"></p>
 
-    </select>
-    <div id="test">Color</div>
-    <script src="../../resources/js/main.js"></script>
+<script src="../../resources/js/test.js">
+</script>
 
 </body>
 </html>
